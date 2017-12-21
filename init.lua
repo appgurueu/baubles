@@ -9,9 +9,9 @@
 
 HEX = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"}
 local function toHex(number) --Converts a number from 0-255 into a hexadecimal string
-	local result=""
-	result=result..HEX[number % 16+1]
-	result=result..HEX[((number - (number % 16)) / 16) % 16+1]
+    local result=""
+    result=result..HEX[number % 16+1]
+    result=result..HEX[((number - (number % 16)) / 16) % 16+1]
     return result:reverse()
 end
 local function round(number) --Rounds a number
@@ -20,12 +20,12 @@ end
 
 function create_colortable(r_steps, g_steps, b_steps, extreme, nodename) --Creates a colortable for r/g/b steps using specified nodename
     local t={}
-	local colors={}
+    local colors={}
     local rs=r_steps
     local bs=b_steps
     local gs=g_steps
     if extreme then
-    	if r_steps % 2 == 0 then
+        if r_steps % 2 == 0 then
             rs=rs+1
         end
         if b_steps % 2 == 0 then
@@ -41,9 +41,9 @@ function create_colortable(r_steps, g_steps, b_steps, extreme, nodename) --Creat
     for r = 1,rs,1 do
         for b = 1,bs,1 do
             for g = 1,gs,1 do
-            	local red=r_step*r
-            	local blue=b_step*b
-            	local green=g_step*g
+                local red=r_step*r
+                local blue=b_step*b
+                local green=g_step*g
                 local register_as=nodename.."_"..red.."_"..green.."_"..blue
                 t[red..","..green..","..blue]=register_as
             end
@@ -54,12 +54,12 @@ end
 
 function save_colortable(r_steps, g_steps, b_steps, extreme, nodename, save_as) --Saves a colortable for r/g/b steps using specified nodename
     local result=""
-	local colors={}
+    local colors={}
     local rs=r_steps
     local bs=b_steps
     local gs=g_steps
     if extreme then
-    	if r_steps % 2 == 0 then
+        if r_steps % 2 == 0 then
             rs=rs+1
         end
         if b_steps % 2 == 0 then
@@ -75,12 +75,12 @@ function save_colortable(r_steps, g_steps, b_steps, extreme, nodename, save_as) 
     for r = 1,rs,1 do
         for b = 1,bs,1 do
             for g = 1,gs,1 do
-            	local red=r_step*r
-            	local blue=b_step*b
-            	local green=g_step*g
+                local red=r_step*r
+                local blue=b_step*b
+                local green=g_step*g
                 local register_as=nodename.."_"..red.."_"..green.."_"..blue
                 if save_as then
-		            result=result.."\n"..red..","..green..","..blue..",255-"..register_as
+                    result=result.."\n"..red..","..green..","..blue..",255-"..register_as
                 end
             end
         end
@@ -93,13 +93,13 @@ end
 
 function register_all_nodes(r_steps, g_steps, b_steps, a, extreme, nodename, node, generate_crafts, append, save_as) --Register all nodes with specified values
     local result=""
-	local alpha=toHex(a)
-	local colors={}
+    local alpha=toHex(a)
+    local colors={}
     local rs=r_steps
     local bs=b_steps
     local gs=g_steps
     if extreme then
-    	if r_steps % 2 == 0 then
+        if r_steps % 2 == 0 then
             rs=rs+1
         end
         if b_steps % 2 == 0 then
@@ -119,17 +119,17 @@ function register_all_nodes(r_steps, g_steps, b_steps, a, extreme, nodename, nod
     for r = 1,rs,1 do
         for b = 1,bs,1 do
             for g = 1,gs,1 do
-            	local red=r_step*r
-            	local blue=b_step*b
-            	local green=g_step*g
-            	local tiles_colorized={}
-            	local copied_table={}
-            	local color=toHex(red)..toHex(green)..toHex(blue)..alpha
+                local red=r_step*r
+                local blue=b_step*b
+                local green=g_step*g
+                local tiles_colorized={}
+                local copied_table={}
+                local color=toHex(red)..toHex(green)..toHex(blue)..alpha
                 for key, value in pairs(node) do
-    	            copied_table[key]=value
+                    copied_table[key]=value
                 end
-            	for index, tile in pairs(node["tiles"]) do
-            		if not string.match(tile,"#color") then
+                for index, tile in pairs(node["tiles"]) do
+                    if not string.match(tile,"#color") then
                         tiles_colorized[index]=tile.."^[colorize:#"..color
                     else 
                         tiles_colorized[index]=string.gsub(tile,"#color","^[colorize:#"..color)
@@ -137,7 +137,7 @@ function register_all_nodes(r_steps, g_steps, b_steps, a, extreme, nodename, nod
                 end
                 if append then 
                     if type(node["drop"])=="table" then
-                    	local drop_items={}
+                        local drop_items={}
                         for index, drop in ipairs(node["drop"]["items"]) do
                             drop_items[index]=drop.."_"..red.."_"..green.."_"..blue
                         end
@@ -148,24 +148,35 @@ function register_all_nodes(r_steps, g_steps, b_steps, a, extreme, nodename, nod
                 end
                 copied_table["tiles"]=tiles_colorized
                 if copied_table["inventory_image"] then
-                	if not string.match(copied_table["inventory_image"],"#color") then
+                    if not string.match(copied_table["inventory_image"],"#color") then
                         copied_table["inventory_image"]=copied_table["inventory_image"].."^[colorize:#"..color
                     else 
                         copied_table["inventory_image"]=string.gsub(copied_table["inventory_image"],"#color","^[colorize:#"..color)
                     end
                 end
-            	if copied_table["wield_image"] then
-            	    if not string.match(copied_table["wield_image"],"#color") then
+                if copied_table["wield_image"] then
+                    if not string.match(copied_table["wield_image"],"#color") then
                         copied_table["wield_image"]=copied_table["wield_image"].."^[colorize:#"..color
                     else 
                         copied_table["wield_image"]=string.gsub(copied_table["wield_image"],"#color","^[colorize:#"..color)
                     end
                 end
-                copied_table["description"]=node["description"]..", Color : Red : "..red..", Green : "..green..", Blue : "..blue
-                local register_as=nodename.."_"..red.."_"..green.."_"..blue
+                if copied_table["description"] then
+                    if not string.match(copied_table["description"],"#color") then
+                        copied_table["description"]=copied_table["description"]..node["description"]..", Color : Red : "..red..", Green : "..green..", Blue : "..blue
+                    else 
+                        copied_table["description"]=string.gsub(copied_table["description"],"#color",", Color : Red : "..red..", Green : "..green..", Blue : "..blue)
+                    end
+                end
+                local register_as=nil
+                if not string.match(nodename,"#color") then
+                    register_as=nodename.."_"..red.."_"..green.."_"..blue
+                else
+                    register_as=string.gsub(nodename, "#color", red.."_"..green.."_"..blue)
+                end
                 minetest.register_node(register_as, copied_table)
                 if save_as then
-		            result=result.."\n"..red..","..green..","..blue..",255-"..register_as
+                    result=result.."\n"..red..","..green..","..blue..",255-"..register_as
                 end
                 if generate_crafts then
                     for color_value, name in pairs(items) do
@@ -174,10 +185,10 @@ function register_all_nodes(r_steps, g_steps, b_steps, a, extreme, nodename, nod
                         local green_value=round((tonumber(splut[2])+green)/2/b_step)*b_step
                         local blue_value=round((tonumber(splut[3])+blue)/2/g_step)*g_step
                         minetest.register_craft({
-	               		    type = "shapeless",
-	                	    output = nodename.."_"..red_value.."_"..green_value.."_"..blue_value.." 2",
-							recipe = {name, register_as},
-						})
+                            type = "shapeless",
+                            output = nodename.."_"..red_value.."_"..green_value.."_"..blue_value.." 2",
+                            recipe = {name, register_as},
+                        })
                     end
                 end
             end
@@ -192,13 +203,13 @@ function register_all_nodes(r_steps, g_steps, b_steps, a, extreme, nodename, nod
 end
 
 function register_all_items(r_steps, g_steps, b_steps, a, extreme, itemname, item, generate_crafts) --Register all items with specified values
-	local alpha=toHex(a)
-	local colors={}
+    local alpha=toHex(a)
+    local colors={}
     local rs=r_steps
     local bs=b_steps
     local gs=g_steps
     if extreme then
-    	if r_steps % 2 == 0 then
+        if r_steps % 2 == 0 then
             rs=rs+1
         end
         if b_steps % 2 == 0 then
@@ -218,17 +229,16 @@ function register_all_items(r_steps, g_steps, b_steps, a, extreme, itemname, ite
     for r = 1,rs,1 do
         for b = 1,bs,1 do
             for g = 1,gs,1 do
-            	local red=r_step*r
-            	local blue=b_step*b
-            	local green=g_step*g
-            	local color=toHex(red)..toHex(green)..toHex(blue)..alpha
-            	local tiles_colorized={}
-            	local copied_table={}
-            	local register_as=itemname.."_"..red.."_"..green.."_"..blue
+                local red=r_step*r
+                local blue=b_step*b
+                local green=g_step*g
+                local color=toHex(red)..toHex(green)..toHex(blue)..alpha
+                local tiles_colorized={}
+                local copied_table={}
                 for key, value in ipairs(item) do
-    	            copied_table[key]=value
+                    copied_table[key]=value
                 end
-            	if copied_table["inventory_image"] then
+                if copied_table["inventory_image"] then
                     if not string.match(copied_table["inventory_image"],"#color") then
                         copied_table["inventory_image"]=copied_table["inventory_image"].."^[colorize:#"..color
                     else 
@@ -242,7 +252,19 @@ function register_all_items(r_steps, g_steps, b_steps, a, extreme, itemname, ite
                         copied_table["wield_image"]=string.gsub(copied_table["wield_image"],"#color","^[colorize:#"..color)
                     end
                 end
-                copied_table["description"]=item["description"]..", Color : Red : "..red..", Green : "..green..", Blue : "..blue
+                if copied_table["description"] then
+                    if not string.match(copied_table["description"],"#color") then
+                        copied_table["description"]=copied_table["description"]..node["description"]..", Color : Red : "..red..", Green : "..green..", Blue : "..blue
+                    else 
+                        copied_table["description"]=string.gsub(copied_table["description"],"#color",", Color : Red : "..red..", Green : "..green..", Blue : "..blue)
+                    end
+                end
+                local register_as=nil
+                if not string.match(nodename,"#color") then
+                    register_as=itemname.."_"..red.."_"..green.."_"..blue
+                else
+                    register_as=string.gsub(nodename, "#color", red.."_"..green.."_"..blue)
+                end
                 minetest.register_craftitem(register_as, copied_table)
                 if generate_crafts then
                     for color_value, name in pairs(items) do
@@ -251,10 +273,10 @@ function register_all_items(r_steps, g_steps, b_steps, a, extreme, itemname, ite
                         local green_value=round((tonumber(splut[2])+green)/2/b_step)*b_step
                         local blue_value=round((tonumber(splut[3])+blue)/2/g_step)*g_step
                         minetest.register_craft({
-	               		    type = "shapeless",
-	                	    output = itemname.."_"..red_value.."_"..green_value.."_"..blue_value.." 2",
-							recipe = {name, register_as},
-						})
+                            type = "shapeless",
+                            output = itemname.."_"..red_value.."_"..green_value.."_"..blue_value.." 2",
+                            recipe = {name, register_as},
+                        })
                     end
                 end
             end
@@ -262,8 +284,7 @@ function register_all_items(r_steps, g_steps, b_steps, a, extreme, itemname, ite
     end
 end
 
-THEMES={star={"Star","xmas_balls_theme_star.png"},heart={"Heart","xmas_balls_theme_heart.png"},snowflake={"Snowflake","xmas_balls_theme_ice.png"},
- christmas_tree={"Christmas Tree","xmas_balls_theme_xmas_tree.png"}, snow={"Snow", "xmas_balls_theme_snow.png"}, candle={"Candle", "xmas_balls_theme_candle.png"}, present={"Present", "xmas_balls_theme_present.png"}}
+THEMES={star={"Star","xmas_balls_theme_star.png"},heart={"Heart","xmas_balls_theme_heart.png"},snowflake={"Snowflake","xmas_balls_theme_ice.png"},christmas_tree={"Christmas Tree","xmas_balls_theme_xmas_tree.png"}, snow={"Snow", "xmas_balls_theme_snow.png"}, candle={"Candle", "xmas_balls_theme_candle.png"}, present={"Present", "xmas_balls_theme_present.png"}}
 SIZES={large={"Large", 0.03, "xmas_balls_size_large.png"}, medium={"Medium", 0.02, "xmas_balls_size_medium.png"}, small={"Small", 0.01, "xmas_balls_size_small.png"}}
 MAXIMUM_SIZE=0.03
 
