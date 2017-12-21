@@ -284,19 +284,19 @@ function register_all_items(r_steps, g_steps, b_steps, a, extreme, itemname, ite
     end
 end
 
-THEMES={star={"Star","xmas_balls_theme_star.png"},heart={"Heart","xmas_balls_theme_heart.png"},snowflake={"Snowflake","xmas_balls_theme_ice.png"},christmas_tree={"Christmas Tree","xmas_balls_theme_xmas_tree.png"}, snow={"Snow", "xmas_balls_theme_snow.png"}, candle={"Candle", "xmas_balls_theme_candle.png"}, present={"Present", "xmas_balls_theme_present.png"}}
-SIZES={large={"Large", 0.03, "xmas_balls_size_large.png"}, medium={"Medium", 0.02, "xmas_balls_size_medium.png"}, small={"Small", 0.01, "xmas_balls_size_small.png"}}
+THEMES={star={"Star","baubles_theme_star.png"},heart={"Heart","baubles_theme_heart.png"},snowflake={"Snowflake","baubles_theme_ice.png"},christmas_tree={"Christmas Tree","baubles_theme_xmas_tree.png"}, snow={"Snow", "baubles_theme_snow.png"}, candle={"Candle", "baubles_theme_candle.png"}, present={"Present", "baubles_theme_present.png"}}
+SIZES={large={"Large", 0.03, "baubles_size_large.png"}, medium={"Medium", 0.02, "baubles_size_medium.png"}, small={"Small", 0.01, "baubles_size_small.png"}}
 MAXIMUM_SIZE=0.03
 
 for name1, texpath in pairs(THEMES) do
     for name2, a in pairs(SIZES) do
         b=a[2]/2*32
-        register_all_nodes(2,2,2, 100, true, "xmas_balls:xmas_ball_"..name1.."_"..name2 , {
-        description = "Xmas Ball, "..texpath[1]..", "..a[1],
+        register_all_nodes(2,2,2, 100, true, "baubles:bauble_"..name1.."_"..name2 , {
+        description = "Bauble, "..texpath[1]..", "..a[1],
         paramtype2="facedir",
-        tiles = {"xmas_balls_ball.png#color^xmas_balls_circle.png^"..texpath[2]},
-        inventory_image = "xmas_balls_ball.png#color^xmas_balls_circle.png^"..texpath[2].."^"..a[3],
-        wield_image = "xmas_balls_ball.png#color^xmas_balls_circle.png^"..texpath[2],
+        tiles = {"baubles_ball.png#color^baubles_circle.png^"..texpath[2]},
+        inventory_image = "baubles_ball.png#color^baubles_circle.png^"..texpath[2].."^"..a[3],
+        wield_image = "baubles_ball.png#color^baubles_circle.png^"..texpath[2],
         light_source=8,
         visual_scale=a[2],
         wield_scale={x=a[2]/MAXIMUM_SIZE,y=a[2]/MAXIMUM_SIZE,z=a[2]/MAXIMUM_SIZE},
@@ -319,9 +319,9 @@ for name1, texpath in pairs(THEMES) do
             },
         },
         drawtype="mesh",
-        mesh="xmas_balls_xmas_ball.obj",
+        mesh="baubles_bauble.obj",
         groups = {oddly_breakable_by_hand=1},
-        drop = "xmas_balls:xmas_ball_"..name1.."_"..name2
+        drop = "baubles:bauble_"..name1.."_"..name2
         }, true, true)
     end
 end
